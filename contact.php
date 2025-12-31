@@ -9,8 +9,8 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/favicon.jpg" rel="icon">
+  <link href="assets/img/favicon.jpg" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -48,9 +48,9 @@
             <div class="contact-info-header">
               <h3>Nos Contacts</h3>
               <p>Appelez-nous ou passez nous voir à tout moment,
-                 nous nous efforçons de répondre à toutes les demandes dans les 
-                 24 heures les jours ouvrables. 
-                 Nous serons heureux de répondre à vos questions.</p>
+                nous nous efforçons de répondre à toutes les demandes dans les
+                24 heures les jours ouvrables.
+                Nous serons heureux de répondre à vos questions.</p>
             </div>
 
             <div class="contact-info-cards">
@@ -107,28 +107,29 @@
 
           <div class="contact-form-panel">
 
-                      <div class="form-container">
+            <div class="form-container">
               <h3>Laissez-nous un message</h3>
 
               <form action="forms/contact.php" method="post" class="php-email-form">
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="nameInput" name="name" placeholder="Full Name" required="">
-                  <label for="nameInput">Nom complet</label>
+                  <input type="text" class="form-control" id="nameInput" name="nom" placeholder="Nom Complet" required="">
+                  <label for="nom">Nom complet</label>
                 </div>
+
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="telInput" name="tel" placeholder="Téléphone">
+                  <label for="tel">Téléphone</label>
+                </div>
+
 
                 <div class="form-floating mb-3">
                   <input type="email" class="form-control" id="emailInput" name="email" placeholder="Email Address" required="">
-                  <label for="emailInput">E-mail</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="subjectInput" name="subject" placeholder="Subject" required="">
-                  <label for="subjectInput">Sujet</label>
+                  <label for="email">E-mail</label>
                 </div>
 
                 <div class="form-floating mb-3">
                   <textarea class="form-control" id="messageInput" name="message" rows="5" placeholder="Your Message" style="height: 150px" required=""></textarea>
-                  <label for="messageInput">Votre message</label>
+                  <label for="message">Votre message</label>
                 </div>
 
                 <div class="my-3">

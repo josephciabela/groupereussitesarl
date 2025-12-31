@@ -1,18 +1,23 @@
-# Ignorer les images et vidéos
+# Ignorer les images
+*.png
 *.jpg
 *.jpeg
-*.png
 *.gif
 *.svg
+
+# Ignorer les vidéos
 *.mp4
 *.mov
 *.avi
 *.webm
 *.mkv
 
-# Ignorer fichiers macOS temporaires
+# Ignorer les backups CSS
+css/backup/
+
+# Ignorer les fichiers macOS temporaires
 .DS_Store
 
-# Ignorer node_modules si présent
+# Ignorer Node modules si jamais tu utilises Node
 node_modules/
 
