@@ -204,6 +204,52 @@ h6 {
   color: var(--heading-color);
 }
 
+/* Admin pages styling */
+.admin-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(55,9,9,0.08);
+  padding: 18px;
+}
+
+.admin-animated { 
+  animation: floatIn 520ms ease both;
+}
+
+@keyframes floatIn {
+  from { transform: translateY(8px); opacity: 0 }
+  to   { transform: translateY(0); opacity: 1 }
+}
+
+.list-group-item form { margin: 0; }
+
+/* Small responsive preview */
+.preview { border-radius: 6px; overflow: hidden; }
+
+/* Buttons */
+.btn-outline-secondary { border-color: rgba(55,9,9,0.12); color: #370909; }
+.btn-outline-secondary:hover { background: #f7f0ee; }
+
+/* Admin form inputs */
+.admin-form-input { border: 1px solid rgba(55,9,9,0.08); border-radius: 6px; padding: 8px; }
+
+/* Admin layout */
+.admin-header { padding: 12px 4px; border-radius: 8px; background: linear-gradient(90deg, rgba(87,39,9,0.04), rgba(255,255,255,0)); margin-bottom:16px }
+.admin-sidebar .list-group-item { border: none; padding: 10px 8px }
+.admin-sidebar .card { background: linear-gradient(180deg, #fff, #fff); }
+.admin-main .card + .card { margin-top: 18px }
+.admin-main h5 { color: var(--heading-color) }
+
+/* preview adjustments */
+.preview { border-radius: 8px; box-shadow: 0 8px 20px rgba(55,9,9,0.06); }
+
+@media (max-width: 767px) {
+  .admin-sidebar { order: 2 }
+  .admin-main { order: 1 }
+  .preview { height: 260px !important }
+}
+
+
 /* Logo swap: ensure both logos occupy identical box to avoid shift */
 .header .logo {
   position: relative;
@@ -361,8 +407,13 @@ h6 {
     border-radius: 4px;
     z-index: 99;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
-        min-width: max-content; /* s’adapte au contenu */
-    white-space: nowrap;    /* empêche le texte de casser la ligne */
+        min-width: 200px; /* largeur minimale raisonnable */
+    /* Autoriser le retour à la ligne pour éviter tout débordement horizontal */
+    white-space: normal;
+    max-width: 360px; /* empêche le dropdown de dépasser l'écran */
+    box-sizing: border-box;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   .navmenu .dropdown ul li {
@@ -374,6 +425,8 @@ h6 {
     font-size: 15px;
     text-transform: none;
     color: var(--nav-dropdown-color);
+    white-space: normal; /* permet le retour à la ligne dans les items */
+    display: block;
   }
 
   .navmenu .dropdown ul a i {
@@ -447,7 +500,7 @@ h6 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    white-space: nowrap;
+    white-space: normal;
     transition: 0.3s;
   }
 

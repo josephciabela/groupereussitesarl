@@ -1261,17 +1261,29 @@
     <span class="close-btn">&times;</span>
 
     <div class="modal-body">
-      <h2>Actualités sur nos activités</h2>
-      <p>Découvrez en vidéo nos projets récents et notre engagement à concevoir des réalisations de qualité pour nos clients.</p>
+      <?php
+      $configFile = __DIR__ . '/data/video_modal.json';
+      $vm = null;
+      if (file_exists($configFile)) {
+          $vm = json_decode(file_get_contents($configFile), true);
+      }
+      if (!$vm) {
+          $vm = ['type' => 'video', 'src' => 'assets/video/Main-video-on-site.mp4', 'title' => 'Actualités sur nos activités', 'description' => 'Découvrez en vidéo nos projets récents et notre engagement.'];
+      }
+      ?>
 
-      <!-- Video YouTube -->
+      <h2><?php echo htmlspecialchars($vm['title']); ?></h2>
+      <p><?php echo htmlspecialchars($vm['description']); ?></p>
+
       <div class="video-container">
-        <iframe id="youtubeVideo"
-          src=""
-          title="Présentation des projets"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+        <?php if ($vm['type'] === 'video'): ?>
+          <video class="img-fluid" autoplay muted loop playsinline style="width:100%;height:360px;object-fit:cover">
+            <source src="/<?php echo ltrim($vm['src'], '/'); ?>" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+          </video>
+        <?php else: ?>
+          <img src="/<?php echo ltrim($vm['src'], '/'); ?>" alt="<?php echo htmlspecialchars($vm['title']); ?>" style="width:100%;height:360px;object-fit:cover" />
+        <?php endif; ?>
       </div>
     </div>
   </div>
