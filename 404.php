@@ -27,102 +27,17 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Constructo
-  * Template URL: https://bootstrapmade.com/constructo-bootstrap-construction-template/
-  * Updated: Aug 30 2025 with Bootstrap v5.3.8
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="page-404">
 
   <header id="header" class="header sticky-top">
-
-    <div class="topbar d-flex align-items-center dark-background">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-        <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
-        </div>
-        <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-        </div>
-      </div>
-    </div><!-- End Top Bar -->
-
-    <div class="branding d-flex align-items-cente">
-
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.php" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Constructo</h1>
-        </a>
-
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="services.php">Services</a></li>
-            <li><a href="projects.php">Projects</a></li>
-            <li><a href="team.php">Team</a></li>
-            <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="service-details.php">Service Details</a></li>
-                <li><a href="project-details.php">Project Details</a></li>
-                <li><a href="quote.php">Quote Form</a></li>
-                <li><a href="terms.php">Terms</a></li>
-                <li><a href="privacy.php">Privacy</a></li>
-                <li><a href="404.php" class="active">404</a></li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li>
-            <li><a href="contact.php">Contact</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-
-      </div>
-
-    </div>
-
+    <?php
+    include('header-footer/header.php')
+    ?>
   </header>
 
   <main class="main">
-
-    <!-- Page Title -->
-    <div class="page-title light-background">
-      <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">404</h1>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.php">Home</a></li>
-            <li class="current">404</li>
-          </ol>
-        </nav>
-      </div>
-    </div><!-- End Page Title -->
 
     <!-- Error 404 Section -->
     <section id="error-404" class="error-404 section">
@@ -136,26 +51,14 @@
 
           <h1 class="error-code mb-4" data-aos="fade-up" data-aos-delay="300">404</h1>
 
-          <h2 class="error-title mb-3" data-aos="fade-up" data-aos-delay="400">Oops! Page Not Found</h2>
+          <h2 class="error-title mb-3" data-aos="fade-up" data-aos-delay="400">Page non trouvée</h2>
 
           <p class="error-text mb-4" data-aos="fade-up" data-aos-delay="500">
-            The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+            La page que vous recherchez n’existe pas ou a été déplacée.<br>
+            Merci de vérifier l’URL ou de retourner à la page d’accueil.
           </p>
 
-          <div class="search-box mb-4" data-aos="fade-up" data-aos-delay="600">
-            <form action="#" class="search-form">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for pages..." aria-label="Search">
-                <button class="btn search-btn" type="submit">
-                  <i class="bi bi-search"></i>
-                </button>
-              </div>
-            </form>
-          </div>
 
-          <div class="error-action" data-aos="fade-up" data-aos-delay="700">
-            <a href="/" class="btn btn-primary">Back to Home</a>
-          </div>
         </div>
 
       </div>
@@ -165,67 +68,9 @@
   </main>
 
   <footer id="footer" class="footer dark-background">
-
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-5 col-md-12 footer-about">
-          <a href="index.php" class="logo d-flex align-items-center">
-            <span class="sitename">MyWebsite</span>
-          </a>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-6 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-6 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>Contact Us</h4>
-          <p>A108 Adam Street</p>
-          <p>New York, NY 535022</p>
-          <p>United States</p>
-          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-          <p><strong>Email:</strong> <span>info@example.com</span></p>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Constructo</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-
+    <?php
+    include('header-footer/footer.php')
+    ?>
   </footer>
 
   <!-- Scroll Top -->
