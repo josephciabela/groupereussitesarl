@@ -15,14 +15,14 @@
     <div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.php" class="logo d-flex align-items-center">
+        <a href="/groupereussitesarl/index.php" class="logo d-flex align-items-center">
           <img src="assets/img/logo-GR-sarl.png" alt="Groupe Reussite sarl" class="header-logo logo-dark">
           <img src="assets/img/logo-GR-sarl-white.png" alt="Groupe Reussite sarl" class="header-logo logo-light">
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.php" class="active">Acceuil</a></li>
+            <li><a href="/groupereussitesarl/index.php" class="active">Acceuil</a></li>
             <li class="dropdown">
               <a href="#">
                 <span>À propos</span>
@@ -30,7 +30,7 @@
               </a>
               <ul>
                 <li>
-                  <a href="#about">Qui sommes-nous?</a>
+                  <a href="/groupereussitesarl/index.php#about">Qui sommes-nous?</a>
                 </li>
                 <li>
                   <a href="assets/docs/Groupe-Reussite-sarl-Profil-Business.pdf" download>
@@ -41,7 +41,7 @@
             </li>
 
             <li><a href="#"id="openModal">Actualités</a></li>
-            <li><a href="#services">Services</a></li>
+            <li><a href="/groupereussitesarl/index.php#services">Services</a></li>
             <li class="dropdown">
               <a href="#">
                 <span>Contact</span>
@@ -49,12 +49,10 @@
               </a>
               <ul>
                 <li>
-                  <a href="contact.php">Contactez-nous</a>
+                  <a href="/groupereussitesarl/contact.php">Contactez-nous</a>
                 </li>
                 <li>
-                  <a href="#" data-bs-toggle="modal" data-bs-target="#questionnaireModal">
-                    Questionnaire d’Ouverture Dossier Client
-                  </a>
+                  <a href="/groupereussitesarl/index.php#questionnaireModal">Questionnaire d’Ouverture Dossier Client</a>
                 </li>
               </ul>
             </li>

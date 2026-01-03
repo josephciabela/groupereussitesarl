@@ -1,5 +1,8 @@
 <?php
 session_start();
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../functions.php';
+
 if (!isset($_SESSION['admin_logged']) || $_SESSION['admin_logged'] !== true) {
     header('Location: login.php');
     exit;
@@ -13,12 +16,35 @@ if (file_exists($configPath)) {
     if (is_array($json)) $data = array_merge($data, $json);
 }
 
+// Fetch contact messages and questionnaire submissions if DB available
+$messages = [];
+$questionnaires = [];
+if (!empty($connexion)) {
+  try {
+    $stmt = $connexion->query('SELECT id, nom AS name, tel, email, message, created_at FROM contact_messages ORDER BY created_at DESC LIMIT 200');
+    $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  } catch (Exception $e) {
+    error_log('Error fetching messages: ' . $e->getMessage());
+    $messages = [];
+  }
+  try {
+    $stmt = $connexion->query('SELECT id, client_name, client_email, client_phone, payload, created_at FROM questionnaire_submissions ORDER BY created_at DESC LIMIT 200');
+    $questionnaires = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  } catch (Exception $e) {
+    error_log('Error fetching questionnaires: ' . $e->getMessage());
+    $questionnaires = [];
+  }
+}
+
 ?>
 <!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>Admin Dashboard</title>
+  <!-- Favicons: use same as site -->
+  <link href="../assets/img/favicon.jpg" rel="icon">
+  <link href="../assets/img/favicon.jpg" rel="apple-touch-icon">
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/css/main.css" rel="stylesheet">
   <style>.preview{max-width:100%;height:auto;max-height:360px;object-fit:cover}</style>
@@ -114,8 +140,120 @@ if (file_exists($configPath)) {
             </div>
           </div>
         </div>
+        
+        <div class="card admin-card p-3 mt-4">
+          <h5 class="mb-3">Messages Contact</h5>
+          <?php if (empty($messages)): ?>
+            <div class="text-muted">Aucun message enregistré.</div>
+          <?php else: ?>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Message</th><th>Reçu</th></tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($messages as $m): ?>
+                    <tr>
+                      <td><?php echo htmlspecialchars($m['name']); ?></td>
+                      <td><?php echo htmlspecialchars($m['tel']); ?></td>
+                      <td><?php echo htmlspecialchars($m['email']); ?></td>
+                      <td style="max-width:360px;word-break:break-word"><?php echo nl2br(htmlspecialchars($m['message'])); ?></td>
+                      <td><?php echo htmlspecialchars($m['created_at']); ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          <?php endif; ?>
+        </div>
+
+        <div class="card admin-card p-3 mt-4">
+          <h5 class="mb-3">Questionnaires soumis</h5>
+          <?php if (empty($questionnaires)): ?>
+            <div class="text-muted">Aucune soumission.</div>
+          <?php else: ?>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Détails</th><th>Reçu</th></tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($questionnaires as $q): ?>
+                    <tr>
+                      <td><?php echo htmlspecialchars($q['client_name']); ?></td>
+                      <td><?php echo htmlspecialchars($q['client_phone']); ?></td>
+                      <td><?php echo htmlspecialchars($q['client_email']); ?></td>
+                      <td style="max-width:420px;word-break:break-word">
+                        <?php
+                          $pl = json_decode($q['payload'], true);
+                          if (is_array($pl)) {
+                            $full = json_encode($pl, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                          } else {
+                            $full = $q['payload'];
+                          }
+                          // Replace checkbox values "on" with "oui" for display
+                          $full = str_replace('"on"', '"oui"', $full);
+                          $preview = mb_strimwidth($full, 0, 120, '...');
+                        ?>
+                        <div class="small text-muted" style="white-space:pre-wrap;"><?php echo nl2br(htmlspecialchars($preview)); ?></div>
+                        <div class="mt-2">
+                          <button type="button" class="btn btn-sm btn-outline-primary view-payload-btn" data-payload-id="payload-<?php echo intval($q['id']); ?>">Voir</button>
+                        </div>
+                        <pre id="payload-<?php echo intval($q['id']); ?>" class="d-none"><?php echo htmlspecialchars($full); ?></pre>
+                      </td>
+                      <td><?php echo htmlspecialchars($q['created_at']); ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          <?php endif; ?>
+        </div>
       </main>
     </div>
   </div>
+
+  <!-- Modal to view full payload -->
+  <div class="modal fade" id="viewPayloadModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Détails de la soumission</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <pre id="modalPayloadContent" style="white-space:pre-wrap;">&nbsp;</pre>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.classList && e.target.classList.contains('view-payload-btn')) {
+        var id = e.target.getAttribute('data-payload-id');
+        var src = document.getElementById(id);
+        var text = src ? src.textContent : '';
+        var modalPre = document.getElementById('modalPayloadContent');
+        modalPre.textContent = text || 'Aucun contenu.';
+        try {
+          if (typeof bootstrap !== 'undefined') {
+            var modalEl = document.getElementById('viewPayloadModal');
+            var modal = new bootstrap.Modal(modalEl);
+            modal.show();
+          } else {
+            // fallback
+            alert(modalPre.textContent);
+          }
+        } catch (err) {
+          alert(modalPre.textContent);
+        }
+      }
+    });
+  </script>
+
 </body>
 </html>
