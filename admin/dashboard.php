@@ -51,12 +51,16 @@ if (!empty($connexion)) {
 </head>
 <body class="p-4">
   <div class="container-fluid admin-animated">
+    <?php if (isset($_GET['msg']) && $_GET['msg'] === 'deleted'): ?>
+      <div class="alert alert-success">Suppression effectuée.</div>
+    <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'error'): ?>
+      <div class="alert alert-danger">Erreur lors de la suppression.</div>
+    <?php endif; ?>
     <div class="admin-header d-flex justify-content-between align-items-center mb-4">
       <div class="d-flex align-items-center gap-3">
         <img src="../assets/img/favicon.jpg" alt="logo" style="height:48px;border-radius:6px">
         <div>
           <h4 class="mb-0">Espace Admin</h4>
-          <div class="small text-muted">Gérer le contenu du modal Actualités</div>
         </div>
       </div>
       <div>
@@ -88,6 +92,12 @@ if (!empty($connexion)) {
             <div class="col-12"><input name="password" class="form-control admin-form-input" placeholder="Mot de passe" required></div>
             <div class="col-12"><button class="btn btn-success w-100">Ajouter</button></div>
           </form>
+        </div>
+
+        <div class="card admin-card p-3 mt-4">
+          <h6 class="mb-3">GESTION DES PROJETS</h6>
+          <p class="small text-muted mb-3">Ajouter, modifier ou supprimer les projets</p>
+          <a href="add-project.php" class="btn btn-primary w-100">Gérer les projets</a>
         </div>
       </aside>
 
@@ -149,7 +159,7 @@ if (!empty($connexion)) {
             <div class="table-responsive">
               <table class="table table-sm">
                 <thead>
-                  <tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Message</th><th>Reçu</th></tr>
+                  <tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Message</th><th>Reçu</th><th>Actions</th></tr>
                 </thead>
                 <tbody>
                   <?php foreach ($messages as $m): ?>
@@ -159,6 +169,13 @@ if (!empty($connexion)) {
                       <td><?php echo htmlspecialchars($m['email']); ?></td>
                       <td style="max-width:360px;word-break:break-word"><?php echo nl2br(htmlspecialchars($m['message'])); ?></td>
                       <td><?php echo htmlspecialchars($m['created_at']); ?></td>
+                      <td>
+                        <form method="post" action="delete_entry.php" class="d-inline-block me-1 delete-entry-form">
+                          <input type="hidden" name="type" value="message">
+                          <input type="hidden" name="id" value="<?php echo intval($m['id']); ?>">
+                          <button type="submit" class="btn btn-sm btn-danger delete-entry-btn">Suppr.</button>
+                        </form>
+                      </td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -175,7 +192,7 @@ if (!empty($connexion)) {
             <div class="table-responsive">
               <table class="table table-sm">
                 <thead>
-                  <tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Détails</th><th>Reçu</th></tr>
+                  <tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Détails</th><th>Reçu</th><th>Actions</th></tr>
                 </thead>
                 <tbody>
                   <?php foreach ($questionnaires as $q): ?>
@@ -202,6 +219,13 @@ if (!empty($connexion)) {
                         <pre id="payload-<?php echo intval($q['id']); ?>" class="d-none"><?php echo htmlspecialchars($full); ?></pre>
                       </td>
                       <td><?php echo htmlspecialchars($q['created_at']); ?></td>
+                      <td>
+                        <form method="post" action="delete_entry.php" class="d-inline-block delete-entry-form">
+                          <input type="hidden" name="type" value="questionnaire">
+                          <input type="hidden" name="id" value="<?php echo intval($q['id']); ?>">
+                          <button type="submit" class="btn btn-sm btn-danger delete-entry-btn">Suppr.</button>
+                        </form>
+                      </td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -233,6 +257,7 @@ if (!empty($connexion)) {
 
   <script>
     document.addEventListener('click', function(e) {
+      // view payload
       if (e.target && e.target.classList && e.target.classList.contains('view-payload-btn')) {
         var id = e.target.getAttribute('data-payload-id');
         var src = document.getElementById(id);
@@ -245,11 +270,20 @@ if (!empty($connexion)) {
             var modal = new bootstrap.Modal(modalEl);
             modal.show();
           } else {
-            // fallback
             alert(modalPre.textContent);
           }
         } catch (err) {
           alert(modalPre.textContent);
+        }
+      }
+
+      // delete confirmation (works for buttons inside forms)
+      if (e.target && e.target.classList && e.target.classList.contains('delete-entry-btn')) {
+        e.preventDefault();
+        var form = e.target.closest('form');
+        if (!form) return;
+        if (confirm('Confirmez-vous la suppression de cet enregistrement ?')) {
+          form.submit();
         }
       }
     });
